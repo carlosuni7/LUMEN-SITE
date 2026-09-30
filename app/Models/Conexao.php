@@ -11,12 +11,12 @@ class Conexao
     {
         $host = getenv("HOST");
         $dbname = getenv("DBNAME");
-        $user = getenv("USER");
-        $pass = getenv("PASSWORD");
+        $user = getenv("DB_USERNAME");
+        $pass = getenv("DB_PASSWORD");
         $port = getenv("PORT");
 
         $conexao = "mysql:host={$host}; dbname=produtos-lumen; port={$port}";
-        $this->pdo = new PDO($conexao, "root", "");
+        $this->pdo = new PDO($conexao, $user, $pass);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 

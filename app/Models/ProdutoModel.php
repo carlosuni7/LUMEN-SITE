@@ -16,7 +16,7 @@ class ProdutoModel extends Conexao
         parent::__construct();
     }
 
-    public function listarProduto($id): array{
+    public function listarProduto(int $id): array|false{
 
         $statement = $this->pdo->prepare("select * from produtos where id = :id");
         $statement->execute([
@@ -24,7 +24,7 @@ class ProdutoModel extends Conexao
         ]);
 
         $dados = $statement->fetch(PDO::FETCH_ASSOC);
-        return $dados;
+        return $dados ?: [];
     }
 
     public function listarTodosProdutos(): array {

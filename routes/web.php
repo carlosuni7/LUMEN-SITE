@@ -22,10 +22,7 @@ $router->get('/', function () use ($router) {
 
 $router->get('/produtos', 'ProdutoController@index');
 $router->get('/produtos/all', 'ProdutoController@showProdutos');
-$router->post('/produto/{id}', [
-    'as' => 'produto',
-    "uses" => 'ProdutoController@showProduto'
-]);
+$router->post('/produto/{id}', 'ProdutoController@showProduto');
 
 // $router->get('user/{id}', [
 //     'as'   => 'profile',
@@ -122,16 +119,16 @@ $router->get('/categorias', function () {
 });
 
 // Definição de rotas e com passagem de Parametro
-$router->get('/produtos/{id}', function ($id){
-    $response = [
-        [
-            'id' => $id,
-            'nome' => 'Produto '.$id,
-        ],
-    ];
+// $router->get('/produtos/{id}', function ($id){
+//     $response = [
+//         [
+//             'id' => $id,
+//             'nome' => 'Produto '.$id,
+//         ],
+//     ];
 
-    return json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-});
+//     return json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+// });
 
 
 
@@ -162,9 +159,3 @@ $url = route('profile');
 
 // Redireciona o usuário para essa rota específica:
 //return redirect()->route('profile');
-
-
-
-
-
-
