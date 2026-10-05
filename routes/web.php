@@ -7,22 +7,20 @@
 // Fica o tempo todo esperando os clientes (os visitantes do seu site)
 // chegarem e é ele quem decide para que mesa ou setor cada pessoa deve ir
 
-$router->get('/', function () use ($router) {
-    return "Helo world!";
-});
-
-//
-//$router->get('/', function() {
-//    return "Hello World!";
+//$router->get('/', function () use ($router) {
+//    return "Helo world!";
 //});
-//
+
+$router->get('/', 'Home@index');
+
 //$router->post('/', function() {
 //    //
 //});
 
 $router->get('/produtos', 'ProdutoController@index');
-$router->get('/produtos/all', 'ProdutoController@showProdutos');
-$router->post('/produto/{id}', 'ProdutoController@showProduto');
+$router->get('/produtos/all', 'ProdutoController@ListarTodosProdutos');
+$router->get('/produtos/{id}', 'ProdutoController@ListarProduto');
+$router->post('/produtos/excluir/{id}', 'ProdutoController@ExcluirProduto');
 
 // $router->get('user/{id}', [
 //     'as'   => 'profile',
