@@ -2,7 +2,6 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-
 //$router (O Recepcionista): Ele é o chefe da entrada.
 // Fica o tempo todo esperando os clientes (os visitantes do seu site)
 // chegarem e é ele quem decide para que mesa ou setor cada pessoa deve ir
@@ -13,66 +12,20 @@
 
 $router->get('/', 'Home@index');
 
-//$router->post('/', function() {
-//    //
-//});
-
 $router->get('/produtos', 'ProdutoController@index');
 $router->get('/produtos/all', 'ProdutoController@ListarTodosProdutos');
-$router->get('/produtos/{id}', 'ProdutoController@ListarProduto');
-$router->post('/produtos/excluir/{id}', 'ProdutoController@ExcluirProduto');
+$router->get('/produtos/', 'ProdutoController@ListarProduto');
+
+$router->post('/produto/cadastrar', 'ProdutoController@CadastrarProduto');
+
+
+$router->patch('/produtos/{id}', 'ProdutoController@AtualizarProduto');
+$router->delete('/produtos/excluir/{id}', 'ProdutoController@ExcluirProduto');
 
 // $router->get('user/{id}', [
 //     'as'   => 'profile',
 //     'uses' => 'UserController@showProfile'
 // ]);
-
-// $router->get('/produtos', function (){
-//     $produtos = [
-//         [
-//             'id' => 1,
-//             'nome' => 'Smartphone XYZ',
-//             'preco' => 1999.99,
-//             'categoria' => 'Eletrônicos',
-//             'disponivel' => true
-//         ],
-//         [
-//             'id' => 2,
-//             'nome' => 'Notebook Pro',
-//             'preco' => 5499.00,
-//             'categoria' => 'Computadores',
-//             'disponivel' => true
-//         ],
-//         [
-//             'id' => 3,
-//             'nome' => 'Fone de Ouvido Bluetooth',
-//             'preco' => 299.50,
-//             'categoria' => 'Acessórios',
-//             'disponivel' => false
-//         ],
-//         [
-//             'id' => 4,
-//             'nome' => 'Teclado Mecânico',
-//             'preco' => 450.00,
-//             'categoria' => 'Periféricos',
-//             'disponivel' => true
-//         ],
-//         [
-//             'id' => 5,
-//             'nome' => 'Monitor Ultrawide 29 polegadas',
-//             'preco' => 1250.00,
-//             'categoria' => 'Monitores',
-//             'disponivel' => true
-//         ],
-//     ];
-//     $response = [
-//         'status' => 200,
-//         'message' => 'OK',
-//         'data' => $produtos
-//     ];
-//     return json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-// });
-
 $router->get('/categorias', function () {
     $categorias = [
         [
@@ -115,18 +68,6 @@ $router->get('/categorias', function () {
 
     return json_encode($reponse, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 });
-
-// Definição de rotas e com passagem de Parametro
-// $router->get('/produtos/{id}', function ($id){
-//     $response = [
-//         [
-//             'id' => $id,
-//             'nome' => 'Produto '.$id,
-//         ],
-//     ];
-
-//     return json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-// });
 
 
 

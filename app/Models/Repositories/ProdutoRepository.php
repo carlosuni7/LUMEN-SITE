@@ -4,6 +4,8 @@ namespace App\Models\Repositories;
 
 use App\Models\Conexao;
 use App\Models\Entities\ProdutoModel;
+
+use Illuminate\Http\Request;
 use PDO;
 class ProdutoRepository extends Conexao
 {
@@ -32,7 +34,7 @@ class ProdutoRepository extends Conexao
         return $data ?: [];
     }
 
-    public function inserirProduto(ProdutoModel $prod){
+    public function cadastrarProduto(ProdutoModel $prod){
 
         $sql = "insert into produtos (lojaId, nome, preco, estoque) values (:lojaId, :nome, :preco, :estoque)";
         $stmt = $this->pdo->prepare($sql);
@@ -48,7 +50,7 @@ class ProdutoRepository extends Conexao
         return true;
     }
 
-    public function alterarProduto(ProdutoModel $prod){
+    public function atualizarProduto( ProdutoModel $prod ){
         $statment = $this->pdo->prepare("
         update produtos
         set lojaId = :lojaID, nome = :nome, preco = :preco, estoque = :preco
@@ -64,7 +66,7 @@ class ProdutoRepository extends Conexao
     }
 
     public function excluirProduto(int $id): bool {
-        $sql = "update produtos set ativo = 2 where id = :id";
+        $sql = "DELETE FROM produtos WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
