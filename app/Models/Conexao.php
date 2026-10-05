@@ -15,7 +15,7 @@ class Conexao
         $pass = getenv("DB_PASSWORD");
         $port = getenv("PORT");
 
-        $conexao = "mysql:host={$host}; dbname=produtos-lumen; port={$port}";
+        $conexao = "mysql:host={$host}; dbname=lumen_produtos; port={$port}";
         $this->pdo = new PDO($conexao, $user, $pass);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
