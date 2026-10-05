@@ -33,9 +33,10 @@ class ProdutoModel extends Conexao
     }
 
     public function inserirProduto(ProdutoModel $prod){
-        $statment = $this->pdo->prepare("
-        insert into produtos (lojaId, nome, preco, estoque)
-        values (:lojaId, :nome, :preco, :estoque) ");
+
+        $sql = "insert into produtos (lojaId, nome, preco, estoque) values (:lojaId, :nome, :preco, :estoque)";
+
+        $statment = $this->pdo->prepare();
         $statment->execute([
             "lojaId" => $prod->getLojaId(),
             "nome" => $prod->getNome(),

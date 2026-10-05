@@ -8,7 +8,7 @@
 <body>
 
 <div class="produtos-container">
-    <h1>Aqui ta na pagina de produtos</h1>
+    <h1>Aqui ta na pagina de produtos {{ $nome }}</h1>
 </div>
 </body>
 </html>

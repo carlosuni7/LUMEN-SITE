@@ -6,7 +6,9 @@
     <title>{{ $title }}</title>
 </head>
 <body>
-
+    <h1>
+        Pagina Principal MASTER
+    </h1>
     <div class="container">
         @yield('content')
 

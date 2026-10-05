@@ -1,5 +1,8 @@
 
 @extends('site.master')
 @section('content')
-    <h2>Home</h2>
-@stop
+    <main class="main-home">
+        <h2>Home</h2>
+    </main>
+
+@endsection
