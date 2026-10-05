@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Models;
-use App\Models\Conexao;
-use PDO;
-class ProdutoModel extends Conexao
+namespace App\Models\Entities;
+class ProdutoModel
 {
     private $id;
     private $loja_id;
@@ -12,59 +10,22 @@ class ProdutoModel extends Conexao
     private $preco;
     private $estoque;
 
-    public function __construct(){
-        parent::__construct();
-    }
-
-    public function listarProduto(int $id): array|false{
-
-        $statement = $this->pdo->prepare("select * from produtos where id = :id");
-        $statement->execute([
-            "id" => $id
-        ]);
-
-        $dados = $statement->fetch(PDO::FETCH_ASSOC);
-        return $dados ?: [];
-    }
-
-    public function listarTodosProdutos(): array {
-        $produtos = $this->pdo->query("select * from produtos order by nome")->fetchAll(PDO::FETCH_ASSOC);
-        return $produtos;
-    }
-
-    public function inserirProduto(ProdutoModel $prod){
-
-        $sql = "insert into produtos (lojaId, nome, preco, estoque) values (:lojaId, :nome, :preco, :estoque)";
-
-        $statment = $this->pdo->prepare();
-        $statment->execute([
-            "lojaId" => $prod->getLojaId(),
-            "nome" => $prod->getNome(),
-            "preco" => $prod->getPreco(),
-            "estoque" => $prod->getEstoque(),
-        ]);
-    }
-
-    public function alterarProduto(ProdutoModel $prod){
-        $statment = $this->pdo->prepare("
-        update produtos
-        set lojaId = :lojaID, nome = :nome, preco = :preco, estoque = :preco
-        where lojaId id = :id;
-        ");
-        $statment->execute([
-            "lojaId" => $prod->getLojaId(),
-            "nome" => $prod->getNome(),
-            "preco" => $prod->getPreco(),
-            "estoque" => $prod->getEstoque(),
-            "id" => $prod->getId(),
-        ]);
-    }
-
-    public function excluirProduto(int $id): void {
-        $statment = $this->pdo->prepare("delete from produtos where id = :id;");
-        $statment->execute([
-            "id" => $id,
-        ]);
+    /**
+     * @param $id
+     * @param $loja_id
+     * @param $nome
+     * @param $descricao
+     * @param $preco
+     * @param $estoque
+     */
+    public function __construct(int $id,int $loja_id,string $nome,string $descricao,float $preco,int $estoque)
+    {
+        $this->id = $id;
+        $this->loja_id = $loja_id;
+        $this->nome = $nome;
+        $this->descricao = $descricao;
+        $this->preco = $preco;
+        $this->estoque = $estoque;
     }
 
     public function getId(): int
@@ -125,6 +86,4 @@ class ProdutoModel extends Conexao
         $this->estoque = $estoque;
         return $this;
     }
-
-
 }
