@@ -3,12 +3,12 @@
 namespace App\Models\Entities;
 class ProdutoModel
 {
-    private $id;
+//    private $id;
     private $loja_id;
     private $nome;
     private $descricao;
     private $preco;
-    private $estoque;
+    private $categoria_id;
 
     /**
      * @param $id
@@ -16,16 +16,10 @@ class ProdutoModel
      * @param $nome
      * @param $descricao
      * @param $preco
-     * @param $estoque
+     * @param $categoria_id
      */
-    public function __construct(int $id,int $loja_id,string $nome,string $descricao,float $preco,int $estoque)
+    public function __construct()
     {
-        $this->id = $id;
-        $this->loja_id = $loja_id;
-        $this->nome = $nome;
-        $this->descricao = $descricao;
-        $this->preco = $preco;
-        $this->estoque = $estoque;
     }
 
     public function getId(): int
@@ -37,9 +31,9 @@ class ProdutoModel
         return $this->loja_id;
     }
 
-    public function setLojaId($loja_id): produtoModel
+    public function setLojaId($loja_id)
     {
-        $this->loja_id = $loja_id;
+        $this->loja_id = intval($loja_id);
         return $this;
     }
 
@@ -48,7 +42,7 @@ class ProdutoModel
         return $this->nome;
     }
 
-    public function setNome($nome): produtoModel
+    public function setNome($nome)
     {
         $this->nome = $nome;
         return $this;
@@ -59,7 +53,7 @@ class ProdutoModel
         return $this->descricao;
     }
 
-    public function setDescricao($descricao): produtoModel
+    public function setDescricao($descricao)
     {
         $this->descricao = $descricao;
         return $this;
@@ -70,20 +64,17 @@ class ProdutoModel
         return $this->preco;
     }
 
-    public function setPreco($preco): produtoModel
+    public function setPreco($preco)
     {
-        $this->preco = $preco;
+
+        $this->preco = floatval($preco);
         return $this;
     }
 
-    public function getEstoque()
-    {
-        return $this->estoque;
+    public function getCategoriaId(){
+        return $this->categoria_id;
     }
-
-    public function setEstoque($estoque): produtoModel
-    {
-        $this->estoque = $estoque;
-        return $this;
+    public function setCategoriaId($categoria_id){
+        $this->categoria_id = intval($categoria_id);
     }
 }

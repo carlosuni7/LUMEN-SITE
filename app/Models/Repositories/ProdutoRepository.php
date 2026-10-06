@@ -36,21 +36,23 @@ class ProdutoRepository extends Conexao
 
     public function cadastrarProduto(ProdutoModel $prod){
 
-        $sql = "insert into produtos (lojaId, nome, preco, estoque) values (:lojaId, :nome, :preco, :estoque)";
+        $sql = "insert into produtos (nome, descricao, preco, ativo, id_loja, id_categoria) values (:nome, :descricao, :preco, :ativo, :id_loja, :id_categoria)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(":lojaId",$prod->getLojaId());
         $stmt->bindValue(":nome",$prod->getNome());
+        $stmt->bindValue(":descricao",$prod->getDescricao());
         $stmt->bindValue(":preco",$prod->getPreco());
-        $stmt->bindValue(":estoque",$prod->getEstoque());
-        $stmt->execute();
+        $stmt->bindValue("ativo", 1);
+        $stmt->bindValue("id_loja", $prod->getLojaId());
+        $stmt->bindValue("id_categoria", $prod->getCategoriaId());
+        $sucesso = $stmt->execute();
         // retorna o número de linhas afetadas pela última instrução
-        if($stmt->rowCount() < 0){
+        if (!$sucesso || $stmt->rowCount() === 0) {
             return false;
         }
         return true;
     }
 
-    public function atualizarProduto( ProdutoModel $prod ){
+    public function atualizarProduto( ProdutoModel $prod){
         $statment = $this->pdo->prepare("
         update produtos
         set lojaId = :lojaID, nome = :nome, preco = :preco, estoque = :preco
