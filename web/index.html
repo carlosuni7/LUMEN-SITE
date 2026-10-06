@@ -9,12 +9,13 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-
+    <link rel="stylesheet" href="style.css">
     <title>Formulario Lumen</title>
 </head>
 <body>
 
-<form action="http://localhost:8000/produto/cadastrar" method="POST">
+<form action="http://localhost:8000/produtos/cadastrar" method="POST">
+    <div><h3>Cadastro de Smartphones</h3></div>
     <div>
         <label for="nome">Nome</label>
         <input type="text" name="nome" id="nome" placeholder="Digite o nome do produto" required>
@@ -30,10 +31,10 @@
         <input type="text" name="preco" id="preco" placeholder="0.00">
     </div>
     <br><br>
-    <div>
-        <label for="categoria_id">Categoria</label>
-        <input type="text" name="categoria_id" id="categoria_id" placeholder="Digite a categoria">
-    </div>
+<!--    <div>-->
+<!--        <label for="categoria_id">Categoria</label>-->
+<!--        <input type="text" name="categoria_id" id="categoria_id" placeholder="Digite a categoria">-->
+<!--    </div>-->
 
     <button type="submit">Cadastrar Produto</button>
 
