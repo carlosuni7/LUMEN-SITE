@@ -11,21 +11,20 @@
 //});
 
 $router->get('/', 'Home@index');
-
 $router->get('/produtos', 'ProdutoController@index');
+
 $router->get('/produtos/all', 'ProdutoController@ListarTodosProdutos');
-$router->get('/produtos/', 'ProdutoController@ListarProduto');
 
-$router->post('/produto/cadastrar', 'ProdutoController@CadastrarProduto');
+$router->group(['prefix' => 'produtos'], function () use ($router) {
+    $router->get('{id}', 'ProdutoController@ListarProduto');
 
+    $router->post('cadastrar', 'ProdutoController@CadastrarProduto');
 
-$router->patch('/produtos/{id}', 'ProdutoController@AtualizarProduto');
-$router->delete('/produtos/excluir/{id}', 'ProdutoController@ExcluirProduto');
+    $router->patch('{id}/atualizar', 'ProdutoController@AtualizarProduto');
 
-// $router->get('user/{id}', [
-//     'as'   => 'profile',
-//     'uses' => 'UserController@showProfile'
-// ]);
+    $router->delete('{id}/excluir', 'ProdutoController@ExcluirProduto');
+});
+
 $router->get('/categorias', function () {
     $categorias = [
         [
@@ -69,6 +68,13 @@ $router->get('/categorias', function () {
     return json_encode($reponse, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 });
 
+//$router->get('user/{id}', [
+//    'as'   => 'profile',
+//    'uses' => function ($id) {
+//        return "Usuario Profile".$id;
+//    }
+//]);
+//$url = route('profile',["id"=> 10]);
 
 
 $router->get('/produtos/{id}/categoria/{categoria}', function($id, $categoria = null){
@@ -88,13 +94,6 @@ $router->get('user/{name:[A-Za-z]+}', function ($name) {
         ['nome' => $name],
     ];
 });
-
-$router->get('profile', ['as' => 'profile', function () {
-    //
-}]);
-
-// Gera a URL exata da rota nomeada (ex: "http://localhost:8000/profile"):
-$url = route('profile');
 
 // Redireciona o usuário para essa rota específica:
 //return redirect()->route('profile');
