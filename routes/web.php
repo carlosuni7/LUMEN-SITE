@@ -1,7 +1,7 @@
 <?php
 
 /** @var \Laravel\Lumen\Routing\Router $router */
-
+use Illuminate\Http\Request;
 //$router (O Recepcionista): Ele é o chefe da entrada.
 // Fica o tempo todo esperando os clientes (os visitantes do seu site)
 // chegarem e é ele quem decide para que mesa ou setor cada pessoa deve ir
@@ -13,10 +13,12 @@
 $router->get('/', 'Home@index');
 $router->get('/produtos', 'ProdutoController@index');
 
-$router->get('/produtos/all', 'ProdutoController@ListarTodosProdutos');
+// $router->get('/produtos/all', 'ProdutoController@ListarTodosProdutos');
 
 $router->group(['prefix' => 'produtos'], function () use ($router) {
-    $router->get('{id}', 'ProdutoController@ListarProduto');
+    $router->get('/', 'ProdutoController@ListarTodosProdutos');
+
+    // $router->get('unico/{id}', 'ProdutoController@ListarProduto');
 
     $router->post('cadastrar', 'ProdutoController@CadastrarProduto');
 
