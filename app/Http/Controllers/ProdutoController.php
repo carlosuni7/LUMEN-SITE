@@ -33,11 +33,7 @@ class ProdutoController extends Controller
             "data" => $dados,
         ];
 
-        return (new Response($resultado, 200))->withHeaders([
-            'Content-Type'=>'Application/json',
-            'charset'=>'utf-8',
-            'Cache-Control'=>'TEM Cache',
-            ]);
+        return response()->json($resultado);
     }
 
     public function CadastrarProduto(Request $request){
@@ -74,19 +70,36 @@ class ProdutoController extends Controller
 //        ];
     }
 
-    public function AtualizarProduto(ProdutoModel $prod){
-        $produto = $prod;
+    public function AtualizarProduto($id, Request $request){
+
+        $antigo = $this->ListarProduto($id);
+
+        $nome = $request->input("nome");
+        $descricao = $request->input("descricao");
+        $preco = $request->input("preco");
+
+        $produto = new ProdutoModel();
+        $produto->setId($id);
+        $produto->setNome($nome);
+        $produto->setDescricao($descricao);
+        $produto->setPreco($preco);
+        // var_dump($produto);
         $repository = new ProdutoRepository();
-        $repository->atualizarProduto($produto);
-        $dados = true;
+        $isSucess = $repository->atualizarProduto($produto);
+
+        $novo = $this->ListarProduto($id);
+
         $resultado = [
-            "message" => $dados ? "Produto atualizado com Sucesso!" : "Não foi possivel realizar a operação!",
-            "status" => $dados ? 200 : 500,
+            "message" => $isSucess ? "Produto atualizado com Sucesso!" : "Não foi possivel realizar a operação!",
+            "dados" => [
+                "antigo"=> $antigo,
+                "novo" => $novo,
+            ],
         ];
-        return json_encode($resultado, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        return response()->json($resultado);
     }
 
-    public function ExcluirProduto($id){
+    public function ExcluirProduto(int $id){
         $repository = new ProdutoRepository();
         $res = $repository->excluirProduto($id);
         $resultado = [
@@ -95,6 +108,8 @@ class ProdutoController extends Controller
             "id" => $id
         ];
 
-        return json_encode($resultado, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return response()->json(
+            $resultado,
+        );
     }
 }

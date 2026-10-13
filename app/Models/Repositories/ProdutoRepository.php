@@ -12,14 +12,14 @@ class ProdutoRepository extends Conexao
     public function __construct(){
         parent::__construct();
     }
-    public function listarProduto(int $id): array|false{
+    public function listarProduto(int $id){
         $sql = "SELECT * FROM produtos WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
         // O valor retornado por esta função em caso de sucesso depende do tipo de busca. Em todos os casos, false é retornado em caso de falha ou se não houver mais linhas.
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $data ?: [];
+        return $data?: [];
     }
 
 
@@ -55,16 +55,16 @@ class ProdutoRepository extends Conexao
     public function atualizarProduto( ProdutoModel $prod){
         $statment = $this->pdo->prepare("
         update produtos
-        set lojaId = :lojaID, nome = :nome, preco = :preco, estoque = :preco
-        where lojaId id = :id;
+        set nome = :nome, preco = :preco, descricao = :descricao
+        where id = :id;
         ");
-        $statment->execute([
-            "lojaId" => $prod->getLojaId(),
+        $isUpdate = $statment->execute([
             "nome" => $prod->getNome(),
             "preco" => $prod->getPreco(),
-            "estoque" => $prod->getEstoque(),
+            "descricao" => $prod->getDescricao(),
             "id" => $prod->getId(),
         ]);
+        return $isUpdate;
     }
 
     public function excluirProduto(int $id): bool {

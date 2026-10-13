@@ -4,11 +4,12 @@ namespace App\Models\Entities;
 class ProdutoModel
 {
 //    private $id;
-    private $loja_id;
-    private $nome;
-    private $descricao;
+    private int $id;
+    private int $loja_id;
+    private String $nome;
+    private String $descricao;
     private $preco;
-    private $categoria_id;
+    private int $categoria_id;
 
     /**
      * @param $id
@@ -26,15 +27,17 @@ class ProdutoModel
     {
         return $this->id;
     }
+    public function setId(int $id){
+        $this->id = $id;
+    }
     public function getLojaId()
     {
         return $this->loja_id;
     }
 
-    public function setLojaId($loja_id)
+    public function setLojaId(int $loja_id)
     {
         $this->loja_id = intval($loja_id);
-        return $this;
     }
 
     public function getNome()
@@ -42,10 +45,10 @@ class ProdutoModel
         return $this->nome;
     }
 
-    public function setNome($nome)
+    public function setNome(String $nome)
     {
         $this->nome = $nome;
-        return $this;
+
     }
 
     public function getDescricao()
@@ -53,10 +56,9 @@ class ProdutoModel
         return $this->descricao;
     }
 
-    public function setDescricao($descricao)
+    public function setDescricao(String $descricao)
     {
         $this->descricao = $descricao;
-        return $this;
     }
 
     public function getPreco()
@@ -66,9 +68,7 @@ class ProdutoModel
 
     public function setPreco($preco)
     {
-
         $this->preco = floatval($preco);
-        return $this;
     }
 
     public function getCategoriaId(){
