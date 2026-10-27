@@ -6,6 +6,7 @@ use App\Models\Entities\ProdutoModel;
 use App\Models\Repositories\ProdutoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Date;
 
 class ProdutoController extends Controller
 {
@@ -21,7 +22,7 @@ class ProdutoController extends Controller
             "status" => 200,
             "data" => $dados,
         ];
-        return json_encode($resultado, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return response()->json($resultado);
     }
 
     public function ListarProduto($id){
@@ -39,9 +40,13 @@ class ProdutoController extends Controller
     public function CadastrarProduto(Request $request){
         $produto = new ProdutoModel();
         $repository = new ProdutoRepository();
-        $produto->setNome($request->input('nome'));
-        $produto->setDescricao($request->input('descricao'));
-        $produto->setPreco($request->input('preco'));
+
+        // $produto->setNome($request->input('nome'));
+        // $produto->setDescricao($request->input('descricao'));
+        // $produto->setPreco($request->input('preco'));
+        $produto->setNome("Teste 00");
+        $produto->setDescricao("Testando a o métodos da classe Request");
+        $produto->setPreco("9900");
         $produto->setCategoriaId(1);
         $produto->setLojaId(1);
 
@@ -55,22 +60,24 @@ class ProdutoController extends Controller
                 "preco" => $produto->getPreco(),
             ],
         ];
-
-        return (new Response($resultado, 200))->withHeaders(["Content-Type"=>"Application/json","charset"=>"utf-8"]);
-//        $res = [
-//            "cookies" => $request->cookie(),
-//            "parsedBody" => $request->getPayload(),
-////            "headers" => $request->header(),
-//            "method" => $request->Method(), //  retorna o verbo HTTP da requisição.
-//            // isMethod() - metodo para verificar se o verbo HTTP corresponde a uma determinada string
-//            "url" => $request->url(), //  obter a URL completa, e não apenas o caminho
-//            "url-completo" => $request->fullUrl(), //  obter a URL completa, e não apenas o caminho
-//            "uri" => $request->path(), // retorna o URI da requisição (caminho)
-//            "inputs" => $request->input('descricao'),
-//        ];
+        // return (new Response($resultado, 200))->withHeaders(["Content-Type"=>"Application/json","charset"=>"utf-8"]);
+       $res = [
+           "cookies" => $request->cookie(),
+           "parsedBody" => $request->getPayload(),
+           "user"=>$request->userAgent(),
+           "date"=>$request->date(1),
+            "headers" => $request->header(),
+           "method" => $request->Method(), //  retorna o verbo HTTP da requisição.
+           // isMethod() - metodo para verificar se o verbo HTTP corresponde a uma determinada string
+           "url" => $request->url(), //  obter a URL completa, e não apenas o caminho
+           "url-completo" => $request->fullUrl(), //  obter a URL completa, e não apenas o caminho
+           "uri" => $request->path(), // retorna o URI da requisição (caminho)
+           "inputs" => $request->input('descricao'),
+       ];
+       return response()->json($res, 200, ["charset"=>"utf-8"]);
     }
 
-    public function AtualizarProduto($id, Request $request){
+    public function AtualizarProduto($id, Request $request, Response $response){
 
         $antigo = $this->ListarProduto($id);
 
@@ -96,7 +103,9 @@ class ProdutoController extends Controller
                 "novo" => $novo,
             ],
         ];
-        return response()->json($resultado);
+        $data = $response->getDate();
+        // return response()->json($resultado);
+        return response()->json($resultado, 200, ["Content-type"=>"Application/json", "charset"=>"utf-8"]);
     }
 
     public function ExcluirProduto(int $id){
